@@ -13,9 +13,9 @@ from django.db.utils import IntegrityError
 @permission_classes([AllowAny])
 def create_user(request):
     # Retrieve the data from the request
+    username = request.data.get('username')
     email = request.data.get('email')
     password = request.data.get('password')
-    username = request.data.get('username')
     phone = request.data.get('phone')
     gender = request.data.get('gender')
     locality = request.data.get('locality')
@@ -39,7 +39,7 @@ def create_user(request):
             )
             # Create the user profile if needed (assuming you have a UserProfile model)
             # You can now save additional fields like phone, gender, etc., to UserProfile
-            user_profile = UserProfile.objects.create(
+            UserProfile.objects.create(
                 user=user,
                 phone=phone,
                 gender=gender,
@@ -78,6 +78,8 @@ def login_user(request):
             "status_code": 6001,
             "message": "Please provide both username and password"
         }, status=400)
+
+    print(username, password)
 
     user = authenticate(username=username, password=password)
 
