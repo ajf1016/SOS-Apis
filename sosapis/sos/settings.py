@@ -82,15 +82,23 @@ WSGI_APPLICATION = 'sos.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': os.getenv('PGDATABASE'),  # Database name
+#         'USER': os.getenv('PGUSER'),      # Database user
+#         'PASSWORD': os.getenv('PGPASSWORD'),  # Database password
+#         'HOST': os.getenv('PGHOST'),      # Database host
+#         'PORT': os.getenv('PGPORT', '5432'),  # Database port (default 5432)
+#     }
+# }
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.getenv('PGDATABASE'),  # Database name
-        'USER': os.getenv('PGUSER'),      # Database user
-        'PASSWORD': os.getenv('PGPASSWORD'),  # Database password
-        'HOST': os.getenv('PGHOST'),      # Database host
-        'PORT': os.getenv('PGPORT', '5432'),  # Database port (default 5432)
-    }
+    'default': dj_database_url.config(
+        default=os.getenv('DATABASE_URL'),
+        conn_max_age=1800,  # Connection persistence
+        ssl_require=True    # Enforce SSL for secure connections
+    )
 }
 
 
