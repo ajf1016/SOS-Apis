@@ -55,6 +55,10 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'sos.urls'
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://sos-apis-production.up.railway.app',  # Add your Railway domain here
+]
+
 
 TEMPLATES = [
     {
