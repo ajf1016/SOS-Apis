@@ -51,7 +51,15 @@ def create_user(request):
             response_data = {
                 "status_code": 6000,
                 "message": "User created successfully",
-                "user_id": user.id,
+                "user": {
+                    "username": user.username,
+                    "email": user.email,
+                    "phone": phone,
+                    'gender': gender,
+                    'locality': locality,
+                    'city': city,
+                    'state': state
+                },
             }
             return Response(response_data, status=201)
         else:
