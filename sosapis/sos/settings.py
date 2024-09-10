@@ -18,9 +18,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # .env variables
 SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG') == 'True'
-DB_PWD = os.getenv('DB_PWD')
-DB_NAME = os.getenv('DB_NAME')
-DB_USER = os.getenv('DB_USER')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = SECRET_KEY
@@ -82,11 +79,14 @@ WSGI_APPLICATION = 'sos.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL'),
-        conn_max_age=600,  # For persistent connections
-        ssl_require=True  # Ensure secure connection
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.getenv('PGDATABASE'),  # Database name
+        'USER': os.getenv('PGUSER'),      # Database user
+        'PASSWORD': os.getenv('PGPASSWORD'),  # Database password
+        'HOST': os.getenv('PGHOST'),      # Database host
+        'PORT': os.getenv('PGPORT', '5432'),  # Database port (default 5432)
+    }
 }
 
 
